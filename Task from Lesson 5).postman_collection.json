@@ -1,0 +1,347 @@
+{
+	"info": {
+		"_postman_id": "a7ad944f-83e5-4948-8a8e-4015b32661c2",
+		"name": "Task from Lesson 5)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "44676682"
+	},
+	"item": [
+		{
+			"name": "GET Lists (valid folder id) +schema",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const Ajv = require('ajv');\r",
+							"const ajv = new Ajv();\r",
+							"\r",
+							"\r",
+							"const schema = {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"lists\": {\r",
+							"            \"type\": \"array\",\r",
+							"            \"items\": {\r",
+							"                \"type\": \"object\",\r",
+							"                \"properties\": {\r",
+							"                    \"id\": { \"type\": \"string\" },\r",
+							"                    \"name\": { \"type\": \"string\" },\r",
+							"                    \"orderindex\": { \"type\": \"integer\" },\r",
+							"                    \"status\": { \"type\": \"null\" },\r",
+							"                    \"priority\": { \"type\": \"null\" },\r",
+							"                    \"assignee\": { \"type\": \"null\" },\r",
+							"                    \"task_count\": { \"type\": \"integer\" },\r",
+							"                    \"due_date\": { \"type\": \"null\" },\r",
+							"                    \"start_date\": { \"type\": \"null\" },\r",
+							"                    \"folder\": {\r",
+							"                        \"type\": \"object\",\r",
+							"                        \"properties\": {\r",
+							"                            \"id\": { \"type\": \"string\" },\r",
+							"                            \"name\": { \"type\": \"string\" },\r",
+							"                            \"hidden\": { \"type\": \"boolean\" },\r",
+							"                            \"access\": { \"type\": \"boolean\" }\r",
+							"                        },\r",
+							"                        \"required\": [\"id\", \"name\", \"hidden\", \"access\"]\r",
+							"                    },\r",
+							"                    \"space\": {\r",
+							"                        \"type\": \"object\",\r",
+							"                        \"properties\": {\r",
+							"                            \"id\": { \"type\": \"string\" },\r",
+							"                            \"name\": { \"type\": \"string\" },\r",
+							"                            \"access\": { \"type\": \"boolean\" }\r",
+							"                        },\r",
+							"                        \"required\": [\"id\", \"name\", \"access\"]\r",
+							"                    },\r",
+							"                    \"archived\": { \"type\": \"boolean\" },\r",
+							"                    \"override_statuses\": { \"type\": \"boolean\" },\r",
+							"                    \"permission_level\": { \"type\": \"string\" }\r",
+							"                },\r",
+							"                \"required\": [\"id\", \"name\", \"orderindex\", \"task_count\", \"folder\", \"space\", \"archived\", \"override_statuses\", \"permission_level\"]\r",
+							"            }\r",
+							"        }\r",
+							"    },\r",
+							"    \"required\": [\"lists\"]\r",
+							"};\r",
+							"const validate = ajv.compile(schema);\r",
+							"const response = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Schema is valid\", function () {\r",
+							"   const valid = validate(response);\r",
+							"   pm.expect(valid, JSON.stringify(validate.errors)).to.be.true;\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "{{token}}",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v2/folder/{{team_id}}/list",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"folder",
+						"{{team_id}}",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Lists (valid folder id) + get ids",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var jsonData = pm.response.json();\r",
+							"\r",
+							"jsonData.lists.forEach (item => {\r",
+							"        console.log(item.id)\r",
+							"}\r",
+							");\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "{{token}}",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v2/folder/{{team_id}}/list",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"folder",
+						"{{team_id}}",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Lists (valid folder id) + Pre-script",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"try {\r",
+							"   const raw = JSON.stringify({\r",
+							"  \"name\": \"Test List33\"\r",
+							"});\r",
+							"    var teamId = pm. environment.get(\"team_id\")\r",
+							"    pm.environment.set(\"listId\", \"newId\")\r",
+							"\r",
+							"    const response = await pm.sendRequest({\r",
+							"        url: \"https://api.clickup.com/api/v2/folder/\" + teamId + \"/list\",\r",
+							"        method: \"POST\",\r",
+							"        body: raw,\r",
+							"        header: {\"Authorization\": pm.environment.get(\"token\")}\r",
+							"    });\r",
+							"\r",
+							"    console.log(response.json());\r",
+							"} catch (err) {\r",
+							"    console.error(err);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "value",
+							"value": "",
+							"type": "string"
+						},
+						{
+							"key": "key",
+							"value": "{{token}}",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{host}}/api/v2/folder/{{team_id}}/list",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"folder",
+						"{{team_id}}",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT Update List + PostResponse",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"try {\r",
+							"    const response = await pm.sendRequest({\r",
+							"        url: \"https://api.clickup.com/api/v2/list/\" + pm.environment.get(\"listId\"),\r",
+							"        method: \"DELETE\",\r",
+							"        header: {\"Authorization\": pm.environment.get(\"token\")}\r",
+							"    });\r",
+							"\r",
+							"    console.log(response.json());\r",
+							"} catch (err) {\r",
+							"    console.error(err);\r",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "apikey",
+					"apikey": [
+						{
+							"key": "key",
+							"value": "Authorization",
+							"type": "string"
+						},
+						{
+							"key": "value",
+							"value": "{{token}}",
+							"type": "string"
+						},
+						{
+							"key": "in",
+							"value": "header",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Test List Updated33\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{host}}/api/v2/list/{{listId}}",
+					"host": [
+						"{{host}}"
+					],
+					"path": [
+						"api",
+						"v2",
+						"list",
+						"{{listId}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
